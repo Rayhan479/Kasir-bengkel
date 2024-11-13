@@ -279,7 +279,7 @@
     </div>
 </div>
 
-<!-- Script JavaScript yang dimodifikasi -->
+<!-- Script JavaScript -->
 <script>
 document.getElementById('cari').addEventListener('keyup', function(e) {
     const defaultProducts = document.getElementById('default-products');
