@@ -84,7 +84,7 @@ if (!empty($_SESSION['admin']) || !empty($_SESSION['kasir'])) {
                 $gambar = $fileName; // Simpan nama file di database
             } else {
                 echo 'Error saat mengunggah file';
-                $gambar = ''; // Jika gagal, kosongkan nama file
+                $gambar = ''; 
             }
         }
     
@@ -100,7 +100,7 @@ if (!empty($_SESSION['admin']) || !empty($_SESSION['kasir'])) {
         $data[] = $tgl;
         $data[] = $gambar; 
     
-        // Tambahkan kolom gambar_barang pada query INSERT
+        
         $sql = 'INSERT INTO barang (id_barang, id_kategori, nama_barang, merk, harga_beli, harga_jual, satuan_barang, stok, tgl_input, gambar) 
                 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
         $row = $config->prepare($sql);
