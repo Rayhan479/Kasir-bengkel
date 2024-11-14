@@ -1,10 +1,12 @@
-Created by Kelompok 5
+## Sistem Kasir Penjualan Sparepart Motor Berbasis Web
 
-User & Password :
+### User & Password :
 
 user : admin
 
 pass : 123
+
+---------
 
 user : kasir
 
