@@ -48,33 +48,30 @@
 							</th>
 						</tr>
 						<tr>
-							<td>
-								<select name="bln" class="form-control">
-									<option selected="selected">Bulan</option>
-									<?php
-								$bulan=array("Januari","Februari","Maret","April","Mei","Juni","Juli","Agustus","September","Oktober","November","Desember");
-								$jlh_bln=count($bulan);
-								$bln1 = array('01','02','03','04','05','06','07','08','09','10','11','12');
-								$no=1;
-								for($c=0; $c<$jlh_bln; $c+=1){
-									echo"<option value='$bln1[$c]'> $bulan[$c] </option>";
-								$no++;}
-							?>
-								</select>
-							</td>
-							<td>
-							<?php
-								$now=date('Y');
-								echo "<select name='thn' class='form-control'>";
-								echo '
-								<option selected="selected">Tahun</option>';
-								for ($a=2017;$a<=$now;$a++)
-								{
+						<td>
+							<select name="bln" class="form-control">
+								<option value="" selected="selected">Bulan</option>
+								<?php
+								$bulan = array("Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember");
+								$bln1 = array('01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12');
+								for ($c = 0; $c < count($bulan); $c++) {
+									echo "<option value='{$bln1[$c]}'> {$bulan[$c]} </option>";
+								}
+								?>
+							</select>
+						</td>
+						<td>
+							<select name="thn" class="form-control">
+								<option value="" selected="selected">Tahun</option>
+								<?php
+								$now = date('Y');
+								for ($a = 2017; $a <= $now; $a++) {
 									echo "<option value='$a'>$a</option>";
 								}
-								echo "</select>";
-							?>
-							</td>
+								?>
+							</select>
+						</td>
+
 							<td>
 								<input type="hidden" name="periode" value="ya">
 								<button class="btn btn-primary">
@@ -151,24 +148,33 @@
 							</tr>
 						</thead>
 						<tbody>
-							<?php 
-								$no=1; 
-								if(!empty($_GET['cari'])){
-									$periode = $_POST['bln'].'-'.$_POST['thn'];
-									$no=1; 
-									$jumlah = 0;
-									$bayar = 0;
-									$hasil = $lihat -> periode_jual($periode);
-								}elseif(!empty($_GET['hari'])){
-									$hari = $_POST['hari'];
-									$no=1; 
-									$jumlah = 0;
-									$bayar = 0;
-									$hasil = $lihat -> hari_jual($hari);
-								}else{
-									$hasil = $lihat -> jual();
+						<?php 
+							$no = 1; 
+							$hasil = [];
+
+							if (!empty($_GET['cari'])) {
+								$bulan = $_POST['bln'];
+								$tahun = $_POST['thn'];
+
+								if (!empty($tahun) && empty($bulan)) {
+									// Jika hanya tahun yang dipilih
+									$hasil = $lihat->periode_jual_tahun($tahun);
+								} elseif (!empty($tahun) && !empty($bulan)) {
+									// Jika bulan dan tahun dipilih
+									$periode = $bulan . '-' . $tahun;
+									$hasil = $lihat->periode_jual($periode);
+								} else {
+									// Jika tidak ada input valid
+									$hasil = [];
 								}
+							} elseif (!empty($_GET['hari'])) {
+								$hari = $_POST['hari'];
+								$hasil = $lihat->hari_jual($hari);
+							} else {
+								$hasil = $lihat->jual();
+							}
 							?>
+
 							<?php 
 								$bayar = 0;
 								$jumlah = 0;

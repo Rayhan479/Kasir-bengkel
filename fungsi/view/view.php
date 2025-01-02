@@ -220,6 +220,22 @@ class view
         return $hasil;
     }
 
+    public function periode_jual_tahun($tahun)
+    {
+        $sql = "SELECT nota.*, barang.id_barang, barang.nama_barang, barang.harga_beli, member.id_member,
+                member.nm_member 
+                FROM nota 
+                LEFT JOIN barang ON barang.id_barang = nota.id_barang 
+                LEFT JOIN member ON member.id_member = nota.id_member 
+                WHERE RIGHT(nota.periode, 4) = ? 
+                ORDER BY id_nota ASC";
+        $row = $this->db->prepare($sql);
+        $row->execute(array($tahun));
+        $hasil = $row->fetchAll();
+        return $hasil;
+    }
+
+
     public function hari_jual($hari)
     {
         $ex = explode('-', $hari);
